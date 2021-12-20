@@ -4,6 +4,7 @@ interface IPeerConnection {
   sessionDescription$: Observable<RTCSessionDescription | null>
 
   setRemoteDescription(remoteDescription: RTCSessionDescription): void
+  send(message: string): void
 }
 
 class PeerConnection implements IPeerConnection {
@@ -42,6 +43,10 @@ class PeerConnection implements IPeerConnection {
 
   public setRemoteDescription(remoteDescription: RTCSessionDescription) {
     this._pc.setRemoteDescription(remoteDescription)
+  }
+
+  public send(message: string): void {
+    this._sendChannel.send(message)
   }
 }
 
