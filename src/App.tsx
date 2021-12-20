@@ -1,8 +1,11 @@
 import {useAuth0} from '@auth0/auth0-react'
+import {Alert} from '@mui/material'
+import Loading from 'components/Loading'
 import {useEffect} from 'react'
+import Router from 'Router'
 
 const App: React.FC = () => {
-  const {isLoading, isAuthenticated, loginWithRedirect, logout} = useAuth0()
+  const {isLoading, isAuthenticated, loginWithRedirect} = useAuth0()
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -10,19 +13,12 @@ const App: React.FC = () => {
     }
   }, [isLoading, isAuthenticated])
 
-  const onSignOut = () => logout()
-
   if (isLoading) {
-    return <h1>Loading...</h1>
+    return <Loading />
   } else if (!isAuthenticated) {
-    return <h1>Redirecting to sign in...</h1>
+    return <Alert severity="info">Redirecting to sign in...</Alert>
   } else {
-    return (
-      <>
-        <h1>Hello!</h1>
-        <button onClick={onSignOut}>Sign out</button>
-      </>
-    )
+    return <Router />
   }
 }
 
